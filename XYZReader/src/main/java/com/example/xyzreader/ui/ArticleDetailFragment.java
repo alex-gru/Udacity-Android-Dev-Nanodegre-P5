@@ -118,7 +118,6 @@ public class ArticleDetailFragment extends Fragment implements
             public void onScrollChanged() {
                 mScrollY = mScrollView.getScrollY();
                 getActivityCast().onUpButtonFloorChanged(mItemId, ArticleDetailFragment.this);
-                mPhotoContainerView.setTranslationY((int) (mScrollY - mScrollY / PARALLAX_FACTOR));
                 updateStatusBar();
             }
         });
@@ -207,6 +206,7 @@ public class ArticleDetailFragment extends Fragment implements
                                 mPhotoView.setImageBitmap(imageContainer.getBitmap());
                                 mRootView.findViewById(R.id.meta_bar)
                                         .setBackgroundColor(mMutedColor);
+                                Log.d(ArticleListActivity.TAG, "mPhotoContainerView.getHeight(): " + mPhotoContainerView.getHeight());
                                 updateStatusBar();
                             }
                         }
