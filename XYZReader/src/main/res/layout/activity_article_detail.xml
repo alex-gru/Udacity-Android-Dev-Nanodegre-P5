@@ -12,9 +12,9 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/toolbar_container"
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:background="@android:color/transparent"
-        android:elevation="12dp">
+        android:layout_height="@dimen/appbarHeight"
+        android:background="@color/theme_primary"
+        android:elevation="4dp">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
@@ -26,7 +26,7 @@
                 android:layout_marginLeft="@dimen/list_toolbar_side_margin"
                 android:layout_marginRight="@dimen/list_toolbar_side_margin"
                 android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
+                android:layout_height="@dimen/appbarHeight"
                 app:layout_collapseMode="pin"
                 >
 

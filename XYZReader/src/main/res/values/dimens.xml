@@ -9,5 +9,6 @@
     <dimen name="fab_margin">24dp</dimen>
     <dimen name="list_padding_bottom">24dp</dimen>
     <dimen name="list_padding_top">4dp</dimen>
+    <dimen name="appbarHeight">80dp</dimen>
 
 </resources>
