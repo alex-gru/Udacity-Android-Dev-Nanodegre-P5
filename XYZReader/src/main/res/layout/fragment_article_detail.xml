@@ -1,8 +1,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                android:id="@+id/frame_layout"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/frame_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <FrameLayout
         android:id="@+id/photo_container"
@@ -12,6 +13,7 @@
         <ImageView
         android:id="@+id/photo"
         android:layout_width="match_parent"
+        android:minHeight="200dp"
         android:layout_height="wrap_content"
         android:transitionName="@string/transition_photo"
         />
@@ -21,7 +23,10 @@
     <com.example.xyzreader.ui.ObservableScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:elevation="4dp"
+        >
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -31,10 +36,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/detail_body_bottom_margin"
                 android:maxWidth="@dimen/detail_card_max_width"
                 android:background="#fff"
-                android:elevation="2dp"
-                android:layout_marginTop="150dp"
+                android:id="@+id/maxWidthLinearLayout"
                 >
                 <!--android:layout_marginTop="@dimen/detail_card_top_margin"-->
 
