@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/detail_body_bottom_margin"
+                android:layout_marginBottom="@dimen/sheetMarginBottom"
                 android:maxWidth="@dimen/detail_card_max_width"
                 android:background="#fff"
                 android:id="@+id/maxWidthLinearLayout"

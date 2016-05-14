@@ -173,7 +173,7 @@ public class ArticleDetailFragment extends Fragment implements
 
                                 mScrollView.setPadding(0,bitmap.getHeight(),0,0);
                                 mScrollView.setScrollY(bitmap.getHeight());
-                                final int startScrollPos = (int) (bitmap.getHeight()/1.8);
+                                final int startScrollPos = (int) (bitmap.getHeight()/2);
                                 final int currScrollPos = mScrollView.getScrollY();
                                 Animator animator = ObjectAnimator.ofInt(
                                         mScrollView,
