@@ -9,10 +9,15 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.ShareCompat;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.format.DateUtils;
 import android.text.method.LinkMovementMethod;
@@ -45,12 +50,13 @@ public class ArticleDetailFragment extends Fragment implements
     private long mItemId;
     private View mRootView;
     private int mMutedColor = 0xFF333333;
-    private ObservableScrollView mScrollView;
-    private FrameLayout mFrameLayout;
+    private NestedScrollView mScrollView;
+    private CoordinatorLayout mCoordinatorLayout;
     private ColorDrawable mStatusBarColorDrawable;
 
     private ImageView mPhotoView;
     private int mStatusBarFullOpacityBottom;
+    protected static View mToolbarContainer;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -88,6 +94,12 @@ public class ArticleDetailFragment extends Fragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        mToolbarContainer = mCoordinatorLayout.findViewById(R.id.toolbar_container);
+        Toolbar toolbar = (Toolbar) mToolbarContainer.findViewById(R.id.toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(null);
+
         // In support library r8, calling initLoader for a fragment in a FragmentPagerAdapter in
         // the fragment's onCreate may cause the same LoaderManager to be dealt to multiple
         // fragments because their mIndex is -1 (haven't been added to the activity yet). Thus,
@@ -96,13 +108,19 @@ public class ArticleDetailFragment extends Fragment implements
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        ((AppCompatActivity) getActivity()).setSupportActionBar(null);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
-        mFrameLayout = (FrameLayout)
+        mCoordinatorLayout = (CoordinatorLayout)
                 mRootView.findViewById(R.id.frame_layout);
 
-        mScrollView = (ObservableScrollView) mRootView.findViewById(R.id.scrollview);
+        mScrollView = (NestedScrollView) mRootView.findViewById(R.id.scrollview);
 
         mPhotoView = (ImageView) mRootView.findViewById(R.id.photo);
 
@@ -171,16 +189,16 @@ public class ArticleDetailFragment extends Fragment implements
                                 mRootView.findViewById(R.id.meta_bar)
                                         .setBackgroundColor(mMutedColor);
 
-                                mScrollView.setPadding(0,bitmap.getHeight(),0,0);
-                                mScrollView.setScrollY(bitmap.getHeight());
-                                final int startScrollPos = (int) (bitmap.getHeight()/2);
-                                final int currScrollPos = mScrollView.getScrollY();
-                                Animator animator = ObjectAnimator.ofInt(
-                                        mScrollView,
-                                        "scrollY",
-                                        startScrollPos)
-                                        .setDuration(300);
-                                animator.start();
+//                                mScrollView.setPadding(0,bitmap.getHeight(),0,0);
+//                                mScrollView.setScrollY(bitmap.getHeight());
+//                                final int startScrollPos = (int) (bitmap.getHeight()/2);
+//                                final int currScrollPos = mScrollView.getScrollY();
+//                                Animator animator = ObjectAnimator.ofInt(
+//                                        mScrollView,
+//                                        "scrollY",
+//                                        startScrollPos)
+//                                        .setDuration(300);
+//                                animator.start();
                                 updateStatusBar();
                             }
                         }

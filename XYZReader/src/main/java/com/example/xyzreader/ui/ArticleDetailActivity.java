@@ -37,7 +37,6 @@ public class ArticleDetailActivity extends ActionBarActivity
 
     private ViewPager mPager;
     private MyPagerAdapter mPagerAdapter;
-    private View mToolbarContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,10 +72,7 @@ public class ArticleDetailActivity extends ActionBarActivity
             }
         });
 
-        mToolbarContainer = findViewById(R.id.toolbar_container);
-        Toolbar toolbar = (Toolbar) mToolbarContainer.findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         if (savedInstanceState == null) {
             if (getIntent() != null && getIntent().getData() != null) {
