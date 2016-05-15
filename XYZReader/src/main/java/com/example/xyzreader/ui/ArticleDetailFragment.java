@@ -127,6 +127,7 @@ public class ArticleDetailFragment extends Fragment implements
         mToolbar = (Toolbar) mToolbarContainer.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("");
 
         // In support library r8, calling initLoader for a fragment in a FragmentPagerAdapter in
         // the fragment's onCreate may cause the same LoaderManager to be dealt to multiple
