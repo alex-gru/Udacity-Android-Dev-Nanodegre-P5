@@ -46,7 +46,6 @@ public class ArticleDetailFragment extends Fragment implements
     private static final String TAG = "ArticleDetailFragment";
 
     public static final String ARG_ITEM_ID = "item_id";
-    private static final float PARALLAX_FACTOR = 1.25f;
 
     private Cursor mCursor;
     private long mItemId;
@@ -57,11 +56,11 @@ public class ArticleDetailFragment extends Fragment implements
     private ColorDrawable mStatusBarColorDrawable;
 
     private ImageView mPhotoView;
-    private int mStatusBarFullOpacityBottom;
     protected static AppBarLayout mToolbarContainer;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private Toolbar mToolbar;
     private String toolbarTitle;
+    private OffsetChangedListener onOffsetChangedListener;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -86,8 +85,6 @@ public class ArticleDetailFragment extends Fragment implements
             mItemId = getArguments().getLong(ARG_ITEM_ID);
         }
 
-        mStatusBarFullOpacityBottom = getResources().getDimensionPixelSize(
-                R.dimen.detail_card_top_margin);
         setHasOptionsMenu(true);
     }
 
@@ -99,36 +96,6 @@ public class ArticleDetailFragment extends Fragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mToolbarContainer = (AppBarLayout) mCoordinatorLayout.findViewById(R.id.toolbar_container);
-        mCollapsingToolbarLayout = (CollapsingToolbarLayout) mToolbarContainer.findViewById(R.id.collapsingToolbarLayout);
-        mCollapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
-
-        // as found here: http://stackoverflow.com/questions/31662416/show-collapsingtoolbarlayout-title-only-when-collapsed
-        mToolbarContainer.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            boolean isShow = false;
-            int scrollRange = -1;
-
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (scrollRange == -1) {
-                    scrollRange = appBarLayout.getTotalScrollRange();
-                }
-                Log.d("TAG", String.valueOf(verticalOffset));
-
-                if (scrollRange + verticalOffset == 0) {
-                    mCollapsingToolbarLayout.setTitle(toolbarTitle);
-                    isShow = true;
-                } else if(isShow) {
-                    mCollapsingToolbarLayout.setTitle("");
-                    isShow = false;
-                }
-            }
-        });
-        mToolbar = (Toolbar) mToolbarContainer.findViewById(R.id.toolbar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("");
-
         // In support library r8, calling initLoader for a fragment in a FragmentPagerAdapter in
         // the fragment's onCreate may cause the same LoaderManager to be dealt to multiple
         // fragments because their mIndex is -1 (haven't been added to the activity yet). Thus,
@@ -139,7 +106,13 @@ public class ArticleDetailFragment extends Fragment implements
     @Override
     public void onPause() {
         super.onPause();
-        ((AppCompatActivity) getActivity()).setSupportActionBar(null);
+//        ((AppCompatActivity) getActivity()).setSupportActionBar(null);
+        // as found here: http://stackoverflow.com/questions/31662416/show-collapsingtoolbarlayout-title-only-when-collapsed
+        mToolbarContainer.removeOnOffsetChangedListener(onOffsetChangedListener);
+        onOffsetChangedListener = new OffsetChangedListener();
+        mToolbarContainer.addOnOffsetChangedListener(new OffsetChangedListener());
+//         mToolbarContainer.setExpanded(false,true);
+
     }
 
     @Override
@@ -149,9 +122,24 @@ public class ArticleDetailFragment extends Fragment implements
         mCoordinatorLayout = (CoordinatorLayout)
                 mRootView.findViewById(R.id.frame_layout);
 
+        mToolbarContainer = (AppBarLayout) mCoordinatorLayout.findViewById(R.id.toolbar_container);
+        mCollapsingToolbarLayout = (CollapsingToolbarLayout) mToolbarContainer.findViewById(R.id.collapsingToolbarLayout);
+        mCollapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
+        mToolbar = (Toolbar) mToolbarContainer.findViewById(R.id.toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("");
+//        mToolbarContainer.setExpanded(false,true);
+
+
+
         mScrollView = (NestedScrollView) mRootView.findViewById(R.id.scrollview);
 
         mPhotoView = (ImageView) mRootView.findViewById(R.id.photo);
+
+        mToolbarContainer.removeOnOffsetChangedListener(onOffsetChangedListener);
+        onOffsetChangedListener = new OffsetChangedListener();
+        mToolbarContainer.addOnOffsetChangedListener(new OffsetChangedListener());
 
         mStatusBarColorDrawable = new ColorDrawable(0);
 
@@ -279,4 +267,28 @@ public class ArticleDetailFragment extends Fragment implements
         mCursor = null;
         bindViews();
     }
+
+    private class OffsetChangedListener implements AppBarLayout.OnOffsetChangedListener {
+        boolean isShow = false;
+        int scrollRange = -1;
+
+        @Override
+        public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+            if (scrollRange <= 0) {
+                scrollRange = appBarLayout.getTotalScrollRange();
+            }
+            Log.d("TAG", "scrollRange: " + scrollRange);
+            Log.d("TAG", "vertical offset: " + verticalOffset);
+            if (scrollRange + verticalOffset == 0) {
+                Log.d("TAG", "Now show Title!");
+            }
+            if (scrollRange + verticalOffset == 0) {
+                mCollapsingToolbarLayout.setTitle(toolbarTitle);
+                isShow = true;
+            } else if(isShow) {
+                mCollapsingToolbarLayout.setTitle("");
+                isShow = false;
+            }
+        }
+    };
 }
