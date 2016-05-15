@@ -12,6 +12,8 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.widget.NestedScrollView;
@@ -56,7 +58,10 @@ public class ArticleDetailFragment extends Fragment implements
 
     private ImageView mPhotoView;
     private int mStatusBarFullOpacityBottom;
-    protected static View mToolbarContainer;
+    protected static AppBarLayout mToolbarContainer;
+    private CollapsingToolbarLayout mCollapsingToolbarLayout;
+    private Toolbar mToolbar;
+    private String toolbarTitle;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -94,11 +99,34 @@ public class ArticleDetailFragment extends Fragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mToolbarContainer = mCoordinatorLayout.findViewById(R.id.toolbar_container);
-        Toolbar toolbar = (Toolbar) mToolbarContainer.findViewById(R.id.toolbar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        mToolbarContainer = (AppBarLayout) mCoordinatorLayout.findViewById(R.id.toolbar_container);
+        mCollapsingToolbarLayout = (CollapsingToolbarLayout) mToolbarContainer.findViewById(R.id.collapsingToolbarLayout);
+        mCollapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
+
+        // as found here: http://stackoverflow.com/questions/31662416/show-collapsingtoolbarlayout-title-only-when-collapsed
+        mToolbarContainer.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean isShow = false;
+            int scrollRange = -1;
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.getTotalScrollRange();
+                }
+                Log.d("TAG", String.valueOf(verticalOffset));
+
+                if (scrollRange + verticalOffset == 0) {
+                    mCollapsingToolbarLayout.setTitle(toolbarTitle);
+                    isShow = true;
+                } else if(isShow) {
+                    mCollapsingToolbarLayout.setTitle("");
+                    isShow = false;
+                }
+            }
+        });
+        mToolbar = (Toolbar) mToolbarContainer.findViewById(R.id.toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(null);
 
         // In support library r8, calling initLoader for a fragment in a FragmentPagerAdapter in
         // the fragment's onCreate may cause the same LoaderManager to be dealt to multiple
@@ -166,7 +194,9 @@ public class ArticleDetailFragment extends Fragment implements
             mRootView.setAlpha(0);
             mRootView.setVisibility(View.VISIBLE);
             mRootView.animate().alpha(1);
-            titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
+            toolbarTitle = mCursor.getString(ArticleLoader.Query.TITLE);
+            titleView.setText(toolbarTitle);
+            mCollapsingToolbarLayout.setTitle(toolbarTitle);
             bylineView.setText(Html.fromHtml(
                     DateUtils.getRelativeTimeSpanString(
                             mCursor.getLong(ArticleLoader.Query.PUBLISHED_DATE),
@@ -184,6 +214,9 @@ public class ArticleDetailFragment extends Fragment implements
                             if (bitmap != null) {
                                 Palette p = Palette.generate(bitmap, 12);
                                 mMutedColor = p.getDarkMutedColor(0xFF333333);
+                                mCollapsingToolbarLayout.setContentScrimColor(mMutedColor);
+//                                mCollapsingToolbarLayout.setStatusBarScrimColor(mMutedColor);
+
                                 mPhotoView.setImageBitmap(imageContainer.getBitmap());
                                 mPhotoView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                                 mRootView.findViewById(R.id.meta_bar)

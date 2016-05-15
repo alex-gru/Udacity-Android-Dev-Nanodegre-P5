@@ -21,7 +21,7 @@
                 android:layout_marginLeft="@dimen/list_toolbar_side_margin"
                 android:layout_marginRight="@dimen/list_toolbar_side_margin"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/appbarHeight"
+                android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 >
 
