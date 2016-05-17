@@ -12,11 +12,6 @@ The app is called "XYZ Reader", which serves as an RSS feed reader. Items are sh
 <img style="position: center;" src="https://github.com/alex-gru/Udacity-Android-Dev-Nanodegre-P5/blob/master/static/screenshots/P5%20-%20Make%20Your%20App%20Material_2.png" width="250">
 
 ### Enhancements
-<img style="position: center;" src="https://github.com/alex-gru/Udacity-Android-Dev-Nanodegre-P5/blob/master/static/screenshots/P5%20-%20Make%20Your%20App%20Material_3.png" width="250">
-<img style="position: center;" src="https://github.com/alex-gru/Udacity-Android-Dev-Nanodegre-P5/blob/master/static/screenshots/P5%20-%20Make%20Your%20App%20Material_4.png" width="250">
-<img style="position: center;" src="https://github.com/alex-gru/Udacity-Android-Dev-Nanodegre-P5/blob/master/static/screenshots/P5%20-%20Make%20Your%20App%20Material_5.png" width="250">
-<img style="position: center;" src="https://github.com/alex-gru/Udacity-Android-Dev-Nanodegre-P5/blob/master/static/screenshots/P5%20-%20Make%20Your%20App%20Material_6.png" width="250">
-
 
 #### Consistent style and colors
 The provided app icon already used an orange tone, so I introduced a color style, which is the nearest in the Material color guideline, i.e. the following shades:
@@ -41,3 +36,9 @@ Instead of strange contrast-lacking text colors, better colors are chosen to imp
 
 ### User experience on different devices
 A very important aspect is to provide the best user experience across all devices. This means, that serveral compatibility issues must be addressed. Android's Support library (and all it's features like AppCompat, Toolbar, FAB, Snackbar) are used to deal with this challenge. 
+
+
+<img style="position: center;" src="https://github.com/alex-gru/Udacity-Android-Dev-Nanodegre-P5/blob/master/static/screenshots/P5%20-%20Make%20Your%20App%20Material_3.png" width="250">
+<img style="position: center;" src="https://github.com/alex-gru/Udacity-Android-Dev-Nanodegre-P5/blob/master/static/screenshots/P5%20-%20Make%20Your%20App%20Material_4.png" width="250">
+<img style="position: center;" src="https://github.com/alex-gru/Udacity-Android-Dev-Nanodegre-P5/blob/master/static/screenshots/P5%20-%20Make%20Your%20App%20Material_5.png" width="250">
+<img style="position: center;" src="https://github.com/alex-gru/Udacity-Android-Dev-Nanodegre-P5/blob/master/static/screenshots/P5%20-%20Make%20Your%20App%20Material_6.png" width="250">
