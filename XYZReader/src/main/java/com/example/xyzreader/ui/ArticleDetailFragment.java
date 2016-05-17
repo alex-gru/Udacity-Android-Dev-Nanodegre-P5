@@ -57,7 +57,7 @@ public class ArticleDetailFragment extends Fragment implements
     private ColorDrawable mStatusBarColorDrawable;
 
     private ImageView mPhotoView;
-    protected static AppBarLayout mToolbarContainer;
+    protected AppBarLayout mToolbarContainer;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private Toolbar mToolbar;
     private String toolbarTitle;
