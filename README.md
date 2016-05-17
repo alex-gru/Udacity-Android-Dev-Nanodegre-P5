@@ -31,6 +31,8 @@ Several minor fixes are applied, to fix image views in the app.
 ### Collapsable Toolbar
 To achieve a rich user experience, a collapsable toolbar is built. The toolbar is shown in the detail view, and contains the high resolution image of the feed. When the user scrolls the detail view, the toolbar collapses, until the standard toolbar height is reached and now simply the title of the article is shown. 
 
+<img style="position: center;" src="https://github.com/alex-gru/Udacity-Android-Dev-Nanodegre-P5/blob/master/static/screenshots/P5%20-%20Make%20Your%20App%20Material_7.gif" width="250">
+
 ### Text fixes
 Instead of strange contrast-lacking text colors, better colors are chosen to improve readability. 
 
