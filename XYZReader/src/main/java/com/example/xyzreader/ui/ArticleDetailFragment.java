@@ -25,6 +25,7 @@ import android.text.format.DateUtils;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -88,10 +89,6 @@ public class ArticleDetailFragment extends Fragment implements
         setHasOptionsMenu(true);
     }
 
-    public ArticleDetailActivity getActivityCast() {
-        return (ArticleDetailActivity) getActivity();
-    }
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -140,6 +137,7 @@ public class ArticleDetailFragment extends Fragment implements
         mToolbarContainer.removeOnOffsetChangedListener(onOffsetChangedListener);
         onOffsetChangedListener = new OffsetChangedListener();
         mToolbarContainer.addOnOffsetChangedListener(new OffsetChangedListener());
+        mCollapsingToolbarLayout.setTitle("");
 
         mStatusBarColorDrawable = new ColorDrawable(0);
 
@@ -156,6 +154,14 @@ public class ArticleDetailFragment extends Fragment implements
         bindViews();
         updateStatusBar();
         return mRootView;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        if (menuItem.getItemId() == android.R.id.home) {
+            Log.d("Tag", "Home pressed");
+        }
+        return super.onOptionsItemSelected(menuItem);
     }
 
     private void updateStatusBar() {
@@ -290,5 +296,5 @@ public class ArticleDetailFragment extends Fragment implements
                 isShow = false;
             }
         }
-    };
+    }
 }

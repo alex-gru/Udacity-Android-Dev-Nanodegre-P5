@@ -30,7 +30,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_collapseMode="parallax"
-                android:transitionName="@string/transition_photo"
                 />
 
             <android.support.v7.widget.Toolbar
@@ -51,21 +50,6 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <!--<FrameLayout-->
-        <!--android:id="@+id/photo_container"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
-<!---->
-        <!--<ImageView-->
-        <!--android:id="@+id/photo"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:minHeight="200dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:transitionName="@string/transition_photo"-->
-        <!--/>-->
-<!---->
-    <!--</FrameLayout>-->
-
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
@@ -75,7 +59,6 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:fitsSystemWindows="true"
         >
-        <!--android:layout_marginTop="@dimen/appbarHeight"-->
 
         <FrameLayout
             android:layout_width="match_parent"
